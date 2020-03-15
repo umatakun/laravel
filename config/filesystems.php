@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+    'cloud' => 'gcs',
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,12 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'gcs' => [
+            'driver' => 'gcs',
+            'credentials' => env('GOOGLE_APPLICATION_CREDENTIALS'),
+            'project_id'  => env('GCS_PJ_ID'),
+            'bucket'      => env('GCS_BUCKET')
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
