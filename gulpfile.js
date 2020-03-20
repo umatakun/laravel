@@ -24,6 +24,6 @@ gulp.task('minify', function() {
 });
 
 gulp.task('default', function() {
-    gulp.watch('./resources/sass/*.scss', gulp.series( gulp.series('sass', 'minify')));
+    gulp.watch(['./resources/sass/*.scss', './resources/js/*.js'], gulp.series( gulp.series('sass', 'minify')));
 });
 
