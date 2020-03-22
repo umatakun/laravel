@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use App\User;
+
 class TopController extends Controller
 {
     public function indexAction(Request $request)
     {
+        $user = User::all();
         return view('web.index');
     }
 
