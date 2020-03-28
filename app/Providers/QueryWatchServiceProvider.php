@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\QueryLogger;
 
 class QueryWatchServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class QueryWatchServiceProvider extends ServiceProvider
     {
         if (config('app.env') == 'local') {
             DB::listen(function ($query) {
+                $logger = QueryLogger::getInstance();
                 $sql = $query->sql;
                 foreach ($query->bindings as $binding) {
                     if (is_string($binding)) {
@@ -43,6 +45,7 @@ class QueryWatchServiceProvider extends ServiceProvider
                 }
 
                 Log::debug('SQL', ['sql' => $sql, 'time' => "$query->time ms"]);
+                $logger->log(sprintf('SQL:[%s], time:(%s  ms)', $sql, $query->time));
             });
         }
     }
