@@ -7,13 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use App\User;
+use App\Circles;
+use App\Phones;
+use App\Companies;
+use App\Addresses;
+use App\Images;
+use App\Tags;
+use App\Columns;
+use App\News;
+use App\QueryLogger;
 
 class TopController extends Controller
 {
     public function indexAction(Request $request)
     {
-        $user = User::all();
-        return view('web.index');
+        return view('web.relations.index');
     }
 
     public function uploadAction(Request $request)
