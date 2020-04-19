@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Google\Cloud\Storage\StorageClient;
 
 use App\User;
 use App\Circles;
@@ -34,6 +35,13 @@ class TopController extends Controller
         try{
             $image = $request->file('image');
             $filaName = $image->store('public/temp');
+            $client = new StorageClient();
+            $bucket = $client->bucket('laravel_test_published'); // 作成したバケット名
+            $bucket->upload(
+                fopen($image->getPathname(), 'r')
+            );
+            // $disk = Storage::disk('gcs');
+            // $disk->put('test-photo.jpg',fopen($image->getPathname(), 'r'));
         } catch (\Exception $e) {
             $data = [
                 'status' => 500,
